@@ -8,9 +8,14 @@ from streamlit_echarts import st_echarts
 def load_image(name):
     file_lst = os.listdir('/data')
     file_lst = [file for file in file_lst if file.endswith('png')]
-    png_name = [nm for nm in file_lst if name+'.png' in file_lst].index(name)
-    png_name = file_lst[png_name]
-    img = Image.open('/data/' + png_name)
+    if name + '.png' in file_lst:
+        img_path = os.path.join('data', name + '.png')
+    elif name + '.jpg' in file_lst:
+        img_path = os.path.join('data', name + '.jpg')
+    else:
+        st.error(f"Image {name} not found.")
+        return None
+    img = Image.open(img_path)
     print(img)
     return img
 
