@@ -5,8 +5,9 @@ import pandas as pd
 from streamlit_echarts import st_echarts
 
 
-def load_image(name):
-    file_lst = os.listdir('/data')
+def load_body_image(name):
+    file_lst = os.listdir('data')
+    print(file_lst)
     file_lst = [file for file in file_lst if file.endswith('png')]
     if name + '.png' in file_lst:
         img_path = 'data/' + name + '.png'
@@ -16,12 +17,12 @@ def load_image(name):
         st.error(f"Image {name} not found.")
         return None
     img = Image.open(img_path)
-    print(img)
     return img
 
 def main(data):
     try:
         name = side_bar()
+        #print(name)
         for col in data.columns:
             if col != '이름':
                 data[col] = data[col].astype(float)
@@ -81,12 +82,11 @@ def main(data):
         # 각 운동 점수화 및 전체 상황 테이블
         tab1.dataframe(점수표준화(data), column_config={'m_10': '10m', 'm_20': '20m'}, hide_index=True)
         # 인바디 이미지
-        img = load_image(name)
-        if img == None:
-            tab3.markdown('인바디 사진 찾기 불가...')
-        else:
-            tab3.image(img)
-    except:
+        print('create table 표준화')
+        img = load_body_image(name)
+        tab3.image(img)
+    except Exception as e:
+        print(e)
         pass
 
 
