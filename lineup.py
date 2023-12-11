@@ -82,11 +82,10 @@ def main(data):
         tab1.dataframe(점수표준화(data), column_config={'m_10': '10m', 'm_20': '20m'}, hide_index=True)
         # 인바디 이미지
         img = load_image(name)
-        #print(png_name)
-        try:
-            tab3.image(img)
-        except:
+        if img == None:
             tab3.markdown('인바디 사진 찾기 불가...')
+        else:
+            tab3.image(img)
     except:
         pass
 
