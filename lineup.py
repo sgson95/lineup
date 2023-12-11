@@ -54,7 +54,7 @@ def main(data):
             lst[2] = 13.8 + (13.8 - lst[2])
 
         option = Option_woman(data, name, idx, lst)
-        charts = st_echarts(option, height="120%")
+        charts = st_echarts(option, height="500px")
     tab0, tab3 = st.tabs(['개인현황', '인바디'])
 
 
