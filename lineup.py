@@ -3,8 +3,7 @@ from PIL import Image
 import streamlit as st
 import pandas as pd
 from streamlit_echarts import st_echarts
-import warnings
-warnings.WarningMessage('ignore')
+
 
 def load_image(name):
     file_lst = os.listdir('/data')
@@ -14,72 +13,75 @@ def load_image(name):
     return img
 
 def main(data):
-    name = side_bar()
-    for col in data.columns:
-        if col != '이름':
-            data[col] = data[col].astype(float)
-    # 이름 데이터 선택
-    if '😎 ' in name:
-        name = name.replace('😎 ', '')
-    idx = data[data['이름'] == name].index
-    idx = idx.values[0]
-
-    # 성별별로 육각 차트 표시
-    if name.split('(')[1] == '남)':
-        # 속성 값 정리
-        lst = data.loc[idx].tolist()[1:-1]
-        if 8.3 - lst[1] > 0:
-            lst[1] = 8.3 - (8.3 - lst[1]) + 0.5
+    try:
+        name = side_bar()
+        for col in data.columns:
+            if col != '이름':
+                data[col] = data[col].astype(float)
+        # 이름 데이터 선택
+        if '😎 ' in name:
+            name = name.replace('😎 ', '')
+        idx = data[data['이름'] == name].index
+        idx = idx.values[0]
+    
+        # 성별별로 육각 차트 표시
+        if name.split('(')[1] == '남)':
+            # 속성 값 정리
+            lst = data.loc[idx].tolist()[1:-1]
+            if 8.3 - lst[1] > 0:
+                lst[1] = 8.3 - (8.3 - lst[1]) + 0.5
+            else:
+                lst[1] = 8.3 + (8.3 - lst[1])
+    
+            if 13.8 - lst[2] > 0:
+                lst[2] = 13.8 - (13.8 - lst[2])
+            else:
+                lst[2] = 13.8 + (13.8 - lst[2]) + 0.5
+    
+            option = Option_man(data, name, idx, lst)
+            charts = st_echarts(option, height="500px",)
+    
+    
         else:
-            lst[1] = 8.3 + (8.3 - lst[1])
-
-        if 13.8 - lst[2] > 0:
-            lst[2] = 13.8 - (13.8 - lst[2])
-        else:
-            lst[2] = 13.8 + (13.8 - lst[2]) + 0.5
-
-        option = Option_man(data, name, idx, lst)
-        charts = st_echarts(option, height="500px",)
-
-
-    else:
-        # 속성 값 정리
-        lst = data.loc[idx].tolist()[1:-1]
-        if 8.3 - lst[1] > 0:
-            lst[1] = 8.3 - (8.3 - lst[1]) + 0.5
-        else:
-            lst[1] = 8.3 + (8.3 - lst[1])
-
-        if 13.8 - lst[2] > 0:
-            lst[2] = 13.8 - (13.8 - lst[2]) + 0.5
-        else:
-            lst[2] = 13.8 + (13.8 - lst[2])
-
-        option = Option_woman(data, name, idx, lst)
-        charts = st_echarts(option, height="500px")
-    tab0, tab3 = st.tabs(['개인현황', '인바디'])
-
-
-    data2 = data.copy()
-    #data2 = data2.rename(columns={'m_10': '10m', 'm_20': '20m'})
-    data2_view = data2[data2['이름'] == name]
-    # 개인 점수 표시테이블
-    one_table = 점수표준화_개인(data2_view, name)
-    tab0.dataframe(one_table.style.set_properties(**{'background-color': 'black', 'color': 'white'}),hide_index=True)
-
-    # tab 나누기
-    tab1, tab2 = st.tabs(["전체 상황판", "월별통계"])
-
-
-    # 각 운동 점수화 및 전체 상황 테이블
-    tab1.dataframe(점수표준화(data), column_config={'m_10': '10m', 'm_20': '20m'}, hide_index=True)
-    # 인바디 이미지
-    # file_lst = os.listdir('C:/Users/gyu45/PycharmProjects/pythonProject/smg')
-    # file_lst = [file for file in file_lst if file.endswith('png')]
-    # png_name = [nm for nm in file_lst if name+'.png' in file_lst][0]
-    img = load_image(name)
-    #print(png_name)
-    tab3.image(img)
+            # 속성 값 정리
+            lst = data.loc[idx].tolist()[1:-1]
+            if 8.3 - lst[1] > 0:
+                lst[1] = 8.3 - (8.3 - lst[1]) + 0.5
+            else:
+                lst[1] = 8.3 + (8.3 - lst[1])
+    
+            if 13.8 - lst[2] > 0:
+                lst[2] = 13.8 - (13.8 - lst[2]) + 0.5
+            else:
+                lst[2] = 13.8 + (13.8 - lst[2])
+    
+            option = Option_woman(data, name, idx, lst)
+            charts = st_echarts(option, height="500px")
+        tab0, tab3 = st.tabs(['개인현황', '인바디'])
+    
+    
+        data2 = data.copy()
+        #data2 = data2.rename(columns={'m_10': '10m', 'm_20': '20m'})
+        data2_view = data2[data2['이름'] == name]
+        # 개인 점수 표시테이블
+        one_table = 점수표준화_개인(data2_view, name)
+        tab0.dataframe(one_table.style.set_properties(**{'background-color': 'black', 'color': 'white'}),hide_index=True)
+    
+        # tab 나누기
+        tab1, tab2 = st.tabs(["전체 상황판", "월별통계"])
+    
+    
+        # 각 운동 점수화 및 전체 상황 테이블
+        tab1.dataframe(점수표준화(data), column_config={'m_10': '10m', 'm_20': '20m'}, hide_index=True)
+        # 인바디 이미지
+        # file_lst = os.listdir('C:/Users/gyu45/PycharmProjects/pythonProject/smg')
+        # file_lst = [file for file in file_lst if file.endswith('png')]
+        # png_name = [nm for nm in file_lst if name+'.png' in file_lst][0]
+        img = load_image(name)
+        #print(png_name)
+        tab3.image(img)
+    except:
+        pass
 
 
 # 제자리, m_10, m_20, 윗몸, 배근력, 좌전굴
