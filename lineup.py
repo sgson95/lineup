@@ -75,9 +75,6 @@ def main(data):
         # 각 운동 점수화 및 전체 상황 테이블
         tab1.dataframe(점수표준화(data), column_config={'m_10': '10m', 'm_20': '20m'}, hide_index=True)
         # 인바디 이미지
-        # file_lst = os.listdir('C:/Users/gyu45/PycharmProjects/pythonProject/smg')
-        # file_lst = [file for file in file_lst if file.endswith('png')]
-        # png_name = [nm for nm in file_lst if name+'.png' in file_lst][0]
         img = load_image(name)
         #print(png_name)
         tab3.image(img)
