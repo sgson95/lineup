@@ -3,6 +3,8 @@ from PIL import Image
 import streamlit as st
 import pandas as pd
 from streamlit_echarts import st_echarts
+import warnings
+warnings.WarningMessage('ignore')
 
 def load_image(name):
     file_lst = os.listdir('/data')
