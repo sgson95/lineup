@@ -83,7 +83,10 @@ def main(data):
         # 인바디 이미지
         img = load_image(name)
         #print(png_name)
-        tab3.image(img)
+        try:
+            tab3.image(img)
+        except:
+            tab3.markdown('인바디 사진 찾기 불가...')
     except:
         pass
 
