@@ -10,6 +10,7 @@ def load_image(name):
     file_lst = [file for file in file_lst if file.endswith('png')]
     png_name = [nm for nm in file_lst if name+'.png' in file_lst][0]
     img = Image.open('/data/' + png_name)
+    print(img)
     return img
 
 def main(data):
