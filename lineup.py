@@ -788,7 +788,10 @@ def Option_woman(data, name, idx, lst):
                     },
                     {
                         "value": [int(250), int(9.3), int(15.6), int(75), int(146), int(32)],
-                        "name": "목표"
+                        "name": "목표",
+                        "symbol": 'rect',
+                        'symbolSize': '12',
+                        'lineStyle': {'type':'dashed', 'color': 'rgba(255,0,0)'}
                     },
                 ],
             }
@@ -808,6 +811,4 @@ if __name__ == '__main__':
     #     resolve_path("lineup.py"),
     #     "--global.developmentMode=false"]
     data = pd.read_excel('data/SMG_test.xlsx', sheet_name='status')
-    #data = pd.read_csv('C:/Users/gyu45/PycharmProjects/pythonProject/smg/data.txt', sep="|", encoding='UTF-8')
     main(data)
-    # sys.exit(stcli.main())
