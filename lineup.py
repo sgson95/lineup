@@ -778,7 +778,9 @@ def Option_woman(data, name, idx, lst):
                 "data": [
                     {
                         "value": lst,
-                        "name": "현재"
+                        "name": "현재",
+                        'lineStyle': {'color': 'rgba(0,0,205)'},
+                        'areaStyle': {'color': 'rgba(0, 0, 205, 0.3)'}
                     },
                     {
                         "value": [int(250), int(9.3), int(15.6), int(75), int(146), int(32)],
