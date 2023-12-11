@@ -5,10 +5,10 @@ import pandas as pd
 from streamlit_echarts import st_echarts
 
 def load_image(name):
-    file_lst = os.listdir('C:/temp')
+    file_lst = os.listdir('/data')
     file_lst = [file for file in file_lst if file.endswith('png')]
     png_name = [nm for nm in file_lst if name+'.png' in file_lst][0]
-    img = Image.open('C:/temp/' + png_name)
+    img = Image.open('/data/' + png_name)
     return img
 
 def main(data):
@@ -801,7 +801,7 @@ if __name__ == '__main__':
     #     "run",
     #     resolve_path("lineup.py"),
     #     "--global.developmentMode=false"]
-    data = pd.read_excel('C:/temp/SMG_test.xlsx', sheet_name='status')
+    data = pd.read_excel('data/SMG_test.xlsx', sheet_name='status')
     #data = pd.read_csv('C:/Users/gyu45/PycharmProjects/pythonProject/smg/data.txt', sep="|", encoding='UTF-8')
     main(data)
     # sys.exit(stcli.main())
