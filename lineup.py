@@ -9,9 +9,9 @@ def load_image(name):
     file_lst = os.listdir('/data')
     file_lst = [file for file in file_lst if file.endswith('png')]
     if name + '.png' in file_lst:
-        img_path = 'data/' + name + 'png'
+        img_path = 'data/' + name + '.png'
     elif name + '.jpg' in file_lst:
-        img_path = 'data/' + name + 'jpg'
+        img_path = 'data/' + name + '.jpg'
     else:
         st.error(f"Image {name} not found.")
         return None
